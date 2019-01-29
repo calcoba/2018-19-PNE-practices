@@ -4,6 +4,7 @@ count_c = 0
 count_t = 0
 count_g = 0
 counts = [count_a, count_c, count_t, count_g]
+
 with open("CPLX2.txt") as file:
     dna_chain = file.read()
     dna_chain = dna_chain.split("\n")
