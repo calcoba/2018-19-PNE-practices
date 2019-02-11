@@ -23,7 +23,4 @@ for i in range(len(seq)):
     print("    Bases count:", bases_count)
     bases_percent = str(bases_percent).replace("{", "").replace("}", "").replace("'", "")
     print("    Bases percentage:", bases_percent)
-
-
     print("Sequence {} has a lenght of {}".format(i+1, length))
-
