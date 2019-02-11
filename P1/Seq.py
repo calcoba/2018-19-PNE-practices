@@ -7,9 +7,8 @@ class Seq:
         return len(self.strbases)
 
     def complement(self):
-        one = "ATGC"
-        two = "TACG"
-        translation = self.strbases.maketrans(one, two)
+        dict_bases = {"A": "T", "T": "A", "C": "G", "G": "C"}
+        translation = self.strbases.maketrans(dict_bases)
         strbases_comp = self.strbases.translate(translation)
         return Seq(strbases_comp)
 
@@ -29,24 +28,3 @@ class Seq:
         else:
             perc = 0
         return perc
-
-
-s1 = Seq("ATTCGATCC")
-s2 = Seq("AAAGG")
-s3 = s1.reverse()
-s4 = s2.complement()
-seq = s1, s2, s3, s4
-
-str1 = s1.strbases
-str2 = s2.strbases
-str3 = s3.strbases
-str4 = s4.strbases
-
-for i in range(len(seq)):
-    length = seq[i].len()
-    for letter in ("A", "C", "T", "G"):
-        counter = seq[i].count(letter)
-        print("{} : {}".format(letter, counter))
-
-    print("Sequence {} has a lenght of {}".format(i+1, length))
-print(str1, str2, str3, str4)
