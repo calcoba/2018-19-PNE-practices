@@ -11,3 +11,5 @@ print("File openned: {}".format(myfile.name))
 contents = myfile.read()
 
 print("The file contents are: {}".format(contents))
+
+myfile.close()
