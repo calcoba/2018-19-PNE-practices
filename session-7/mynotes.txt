@@ -1,0 +1,24 @@
+Here we will take notes
+Client-Server model
+The client always take the initiative in the communication, and the server is always listening
+The server will generate a response message with the data the client is requesting.
+The server is passive, it's only answering.
+And example is a webpage.
+Server is always running, is there is no client it's not a problem, the server just will wait.
+If the server is down or not executed then there is no program attending the request of the client.
+The client can be any device capable of executing code. In a computer there are many programs.
+Server will be running in another computer where can be more apps running.
+Computer can be both, server and client.
+Internet: when computers are connected to a cloud and with no direct contact it's the internet,
+this made possible to work with two different computers.
+To connect two computers through internet it's needed the IP address.
+This IP address depends on the connection, depends on the interface that we are using (wifi)
+Teachers IP: 212.128.253.64
+Ping time to 8.8.8.8:
+time=3.49 ms
+Ping time to my computer:
+time=0.051 ms
+Ping time to 212.128.253.86
+time=0.550 ms
+Port: different extensions from the same IP.To connect to a server we need to use a IP address of the computer and the
+port of the server. It is also a number
