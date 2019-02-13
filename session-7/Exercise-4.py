@@ -1,4 +1,4 @@
-# Programming our first client
+# Programming the client in the same computer as the server
 import socket
 while True:
     # Create a socket for communicating with the server
