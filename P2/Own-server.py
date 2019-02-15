@@ -2,8 +2,8 @@ import socket
 from Seq import Seq
 
 # Configure the Server's IP and PORT
-PORT = 8081
-IP = "212.128.253.113"
+PORT = 8080
+IP = "192.168.56.1"
 MAX_OPEN_REQUESTS = 5000
 
 # Counting the number of connections
@@ -35,7 +35,7 @@ try:
         s = Seq(msg)
 
         # Send the message
-        message = " Reverse: {} \n Complement: {}".format(s.reverse().strbases, s.complement().strbases)
+        message = msg
         send_bytes = str.encode(message)
         # We must write bytes, not a string
         clientsocket.send(send_bytes)
