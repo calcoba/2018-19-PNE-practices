@@ -1,10 +1,11 @@
 import socket
 
 # SERVER IP, PORT
-PORT = 8080
+PORT = 8081
 IP = "212.128.253.108"
+activity = True
 
-while True:
+while activity:
     # The client is blocking the server....  NOT A GOOD DESIGN!!!
     msg = input("> ")
 
@@ -23,5 +24,7 @@ while True:
 
     # Print the server's response
     print("Response: {}".format(response))
+    if response == "Server finished":
+        activity = False
 
     s.close()
