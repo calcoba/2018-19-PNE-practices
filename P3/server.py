@@ -1,7 +1,7 @@
 import socket
 from Seq import Seq
 
-PORT = 8085
+PORT = 8080
 IP = "212.128.253.110"
 # Number of clients, if it's full the client will receive a message
 MAX_OPEN_REQUEST = 5
@@ -15,7 +15,6 @@ def process_client(cs):
 
     if msg == "EXIT":
         cs.send(str.encode("Server finished"))
-
         cs.close()
         return False
     elif msg == "":
@@ -52,12 +51,16 @@ serversocket.bind((IP, PORT))
 
 serversocket.listen(MAX_OPEN_REQUEST)
 
-while True:
+server_activity = True
+while server_activity:
 
     print("Waiting for connection at: {}, {}".format(IP, PORT))
     (clientsocket, address) = serversocket.accept()
 
-    process_client(clientsocket)
+    if not process_client(clientsocket):
+        server_activity = False
+
+
 
     # -- Process the client request
     print("Attending client: {}".format(address))
