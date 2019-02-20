@@ -1,19 +1,12 @@
 import socket
 
 # SERVER IP, PORT
-PORT = 8085
+PORT = 8080
 IP = "212.128.253.110"
 activity = True
 
 
-msg = """AGTGTGTAGTGCGTG
-len
-countA
-reverse
-complement
-countC
-countG
-countT"""
+msg = """EXIT"""
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # establish the connection to the Server (IP, PORT)
 s.connect((IP, PORT))
