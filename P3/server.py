@@ -1,8 +1,8 @@
 import socket
 from Seq import Seq
 
-PORT = 8080
-IP = "212.128.253.110"
+PORT = 8000
+IP = "127.0.0.1"
 # Number of clients, if it's full the client will receive a message
 MAX_OPEN_REQUEST = 5
 
@@ -17,20 +17,18 @@ def process_client(cs):
         cs.send(str.encode("Server finished"))
         cs.close()
         return False
-    elif msg == "":
+    elif msg == "empty":
         cs.send(str.encode("ALIVE"))
     else:
         msg = msg.split("\n")
         seq = Seq(msg.pop(0))
         for request in msg:
-            print(request)
             if "count" in request or "perc" in request:
                 base = request[-1]
                 request = request[:-1]
                 action = seq.call_function(request, base)
                 actions.update({request + base: action})
             else:
-                print(request)
                 action = seq.call_function(request)
                 actions.update({request: action})
 
