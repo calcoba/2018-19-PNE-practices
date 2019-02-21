@@ -1,11 +1,6 @@
 import socket
 from Seq import Seq
 
-PORT = 8000
-IP = "127.0.0.1"
-# Number of clients, if it's full the client will receive a message
-MAX_OPEN_REQUEST = 5
-
 
 def process_client(cs):
     # Info must be decode and encode to use in the connection
@@ -42,6 +37,11 @@ def process_client(cs):
     cs.close()
     return True
 
+
+PORT = 8000
+IP = "127.0.0.1"
+# Number of clients, if it's full the client will receive a message
+MAX_OPEN_REQUEST = 5
 
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
