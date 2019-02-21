@@ -21,7 +21,7 @@ def process_client(cs):
         cs.send(str.encode("ALIVE"))
     else:
         msg = msg.split("\n")
-        seq = Seq(msg.pop(0))
+        seq = Seq(msg.pop(0).upper())
         for request in msg:
             if "count" in request or "perc" in request:
                 base = request[-1]
