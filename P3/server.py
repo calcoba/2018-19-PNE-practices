@@ -57,8 +57,5 @@ while server_activity:
 
     if not process_client(clientsocket):
         server_activity = False
-
-
-
     # -- Process the client request
     print("Attending client: {}".format(address))
