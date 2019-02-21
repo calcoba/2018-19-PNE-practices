@@ -31,6 +31,5 @@ class Seq:
 
     def call_function(self, name, base=""):
         fn = getattr(self, name)
-        print(fn)
         value = fn(base)
         return value
