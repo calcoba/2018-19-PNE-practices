@@ -2,7 +2,7 @@ import socket
 import termcolor
 
 PORT = 8081
-IP = "212.128.253.108"
+IP = "212.128.253.110"
 # Number of clients, if it's full the client will receive a message
 MAX_OPEN_REQUEST = 5
 
