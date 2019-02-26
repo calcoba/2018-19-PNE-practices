@@ -31,10 +31,6 @@ def process_client(cs):
                     request = request[:-1]
                     action = seq.call_function(request, base)
                     actions.update({request + base: action})
-                else:
-                    cs.send(str.encode("ERROR"))
-                    cs.close()
-                    return True
             else:
                 try:
                     action = seq.call_function(request)
@@ -58,7 +54,7 @@ def process_client(cs):
     return True
 
 
-PORT = 8002
+PORT = 8001
 IP = "212.128.253.106"
 # Number of clients, if it's full the client will receive a message
 MAX_OPEN_REQUEST = 5
