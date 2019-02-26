@@ -2,7 +2,7 @@ import socket
 
 # SERVER IP, PORT
 PORT = 8081
-IP = "212.128.253.108"
+IP = "212.128.253.110"
 activity = True
 
 while activity:
