@@ -14,6 +14,8 @@ def process_client(cs):
         return False
     elif msg == "empty":
         cs.send(str.encode("ALIVE"))
+        cs.close()
+        return True
     else:
         msg = msg.split("\n")
         seq = Seq(msg.pop(0).upper())
@@ -24,12 +26,20 @@ def process_client(cs):
                 action = seq.call_function(request, base)
                 actions.update({request + base: action})
             else:
-                action = seq.call_function(request)
-                actions.update({request: action})
+                try:
+                    action = seq.call_function(request)
+                    actions.update({request: action})
+                except AttributeError:
+                    actions = ""
+
 
     # Sending the message back to the client
     # (because we are an echo server)
     msg = ["OK"]
+    if not actions:
+        cs.send(str.encode("ERROR"))
+        cs.close()
+        return True
     for values in actions.values():
         msg.append(str(values))
     msg = "\n".join(msg)
@@ -38,8 +48,8 @@ def process_client(cs):
     return True
 
 
-PORT = 8000
-IP = "127.0.0.1"
+PORT = 8002
+IP = "212.128.253.106"
 # Number of clients, if it's full the client will receive a message
 MAX_OPEN_REQUEST = 5
 
