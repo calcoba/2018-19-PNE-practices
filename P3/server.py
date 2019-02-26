@@ -8,6 +8,7 @@ def process_client(cs):
     msg = cs.recv(2048).decode("utf-8")
     actions = {}
 
+    # Check if the message is exit or empty to return to the main program
     if msg == "EXIT":
         cs.send(str.encode("Server finished"))
         cs.close()
@@ -16,14 +17,20 @@ def process_client(cs):
         cs.send(str.encode("ALIVE"))
         cs.close()
         return True
+
+    # The function makes the computations
     else:
         msg = msg.split("\n")
         seq = Seq(msg.pop(0).upper())
         bases = "ACTG"
+
+        # Check if the characters of the DNA sequence are all allowed
         if not all(c in bases for c in seq.strbases):
             cs.send(str.encode("ERROR"))
             cs.close()
             return True
+
+        # Possible functions the program could perform
         for request in msg:
             if "count" in request or "perc" in request:
                 base = request[-1]
@@ -31,16 +38,21 @@ def process_client(cs):
                     request = request[:-1]
                     action = seq.call_function(request, base)
                     actions.update({request + base: action})
+                else:
+                    cs.send(str.encode("ERROR"))
+                    cs.close()
+                    return True
             else:
                 try:
                     action = seq.call_function(request)
                     actions.update({request: action})
+                # If the request action is not allowed then send back an empty variable
                 except AttributeError:
-                    actions = ""
-
+                    cs.send(str.encode("ERROR"))
+                    cs.close()
+                    return True
 
     # Sending the message back to the client
-    # (because we are an echo server)
     msg = ["OK"]
     if not actions:
         cs.send(str.encode("ERROR"))
@@ -55,7 +67,7 @@ def process_client(cs):
 
 
 PORT = 8001
-IP = "212.128.253.106"
+IP = "127.0.0.1"
 # Number of clients, if it's full the client will receive a message
 MAX_OPEN_REQUEST = 5
 
