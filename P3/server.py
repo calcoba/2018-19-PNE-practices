@@ -19,12 +19,22 @@ def process_client(cs):
     else:
         msg = msg.split("\n")
         seq = Seq(msg.pop(0).upper())
+        bases = "ACTG"
+        if not all(c in bases for c in seq.strbases):
+            cs.send(str.encode("ERROR"))
+            cs.close()
+            return True
         for request in msg:
             if "count" in request or "perc" in request:
                 base = request[-1]
-                request = request[:-1]
-                action = seq.call_function(request, base)
-                actions.update({request + base: action})
+                if base in bases:
+                    request = request[:-1]
+                    action = seq.call_function(request, base)
+                    actions.update({request + base: action})
+                else:
+                    cs.send(str.encode("ERROR"))
+                    cs.close()
+                    return True
             else:
                 try:
                     action = seq.call_function(request)
