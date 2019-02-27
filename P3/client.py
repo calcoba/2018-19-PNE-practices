@@ -2,14 +2,12 @@ import socket
 
 # SERVER IP, PORT
 PORT = 8001
-IP = "127.0.0.1"
+IP = "212.128.253.110"
 
-msg = """AGTGTCTGT
-len
-countH"""
-# Verify if the message is empty
-if not msg:
-    msg = "empty"
+msg = """AGTGCTGT
+complement
+reverse
+countA"""
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # establish the connection to the Server (IP, PORT)
