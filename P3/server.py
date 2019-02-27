@@ -9,11 +9,7 @@ def process_client(cs):
     actions = {}
 
     # Check if the message is exit or empty to return to the main program
-    if msg == "EXIT":
-        cs.send(str.encode("Server finished"))
-        cs.close()
-        return False
-    elif msg == "empty":
+    if msg =="\n":
         cs.send(str.encode("ALIVE"))
         cs.close()
         return True
@@ -39,25 +35,17 @@ def process_client(cs):
                     action = seq.call_function(request, base)
                     actions.update({request + base: action})
                 else:
-                    cs.send(str.encode("ERROR"))
-                    cs.close()
-                    return True
+                    actions.update({request: "ERROR"})
             else:
                 try:
                     action = seq.call_function(request)
                     actions.update({request: action})
                 # If the request action is not allowed then send back an empty variable
                 except AttributeError:
-                    cs.send(str.encode("ERROR"))
-                    cs.close()
-                    return True
+                    actions.update({request: "ERROR"})
 
     # Sending the message back to the client
     msg = ["OK"]
-    if not actions:
-        cs.send(str.encode("ERROR"))
-        cs.close()
-        return True
     for values in actions.values():
         msg.append(str(values))
     msg = "\n".join(msg)
@@ -67,7 +55,7 @@ def process_client(cs):
 
 
 PORT = 8001
-IP = "127.0.0.1"
+IP = "212.128.253.110"
 # Number of clients, if it's full the client will receive a message
 MAX_OPEN_REQUEST = 5
 
