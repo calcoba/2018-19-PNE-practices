@@ -2,7 +2,7 @@ import socket
 
 # Change this IP to yours!!!!!
 IP = "212.128.253.110"
-PORT = 8081
+PORT = 8080
 
 
 MAX_OPEN_REQUESTS = 5
@@ -21,7 +21,11 @@ def process_client(cs):
     print(len(msg))
     print(msg)
     url = msg.split("\n")[0]
-    request = url.split()[1]
+    try:
+        request = url.split()[1]
+    except IndexError:
+        cs.close()
+        return
     print(request)
     if "blue" in request:
         f = open("blue.html", 'r')
@@ -52,6 +56,8 @@ def process_client(cs):
 
     # Close the socket
     cs.close()
+
+
 # MAIN PROGRAM
 
 # create an INET, STREAMing socket
@@ -71,6 +77,7 @@ while True:
     # The server is waiting for connections
     print("Waiting for connections at {}, {} ".format(IP, PORT))
     (clientsocket, address) = serversocket.accept()
+    print(clientsocket, address)
 
     # Connection received. A new socket is returned for communicating with the client
     print("Attending connections from client: {}".format(address))
