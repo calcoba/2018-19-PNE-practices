@@ -1,7 +1,7 @@
 import socket
 
 # Change this IP to yours!!!!!
-IP = "212.128.253.110"
+IP = "212.128.253.111"
 PORT = 8080
 
 
@@ -12,12 +12,14 @@ def process_client(cs):
     """Process the client request.
     Parameters:  cs: socket for communicating with the client"""
 
+    """Need to look for the GET message"""
+
     # Read client message. Decode it as a string
     msg = cs.recv(2048).decode("utf-8")
 
     # Print the received message, for debugging
     print()
-    print("Request message: ")
+    print("Request https://github.com/calcoba/2018-19-PNE-practices.gitessage: ")
     print(len(msg))
     print(msg)
     url = msg.split("\n")[0]
@@ -77,7 +79,7 @@ while True:
     # The server is waiting for connections
     print("Waiting for connections at {}, {} ".format(IP, PORT))
     (clientsocket, address) = serversocket.accept()
-    print(clientsocket, address)
+    print("This is the clientsocket: ", clientsocket)
 
     # Connection received. A new socket is returned for communicating with the client
     print("Attending connections from client: {}".format(address))
