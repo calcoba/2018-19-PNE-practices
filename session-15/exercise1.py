@@ -13,23 +13,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         termcolor.cprint("   CMD: "+self.command, 'red')
         termcolor.cprint("   Path: "+self.path, 'yellow')
         requests = self.path.split("?")[-1]
-        for request in requests.split("&"):
-            request = request.split("=")[-1]
-            print(request)
-            if request == "/":
-                f = open("form1.html", 'r')
-                contents = f.read()
-
-                self.send_response(200)
-
-                self.send_header('Content-Type', 'text/html')
-                self.send_header('Content-Length', len(str.encode(contents)))
-                self.end_headers()
-
-                # -- Sending the body of the response message
-                self.wfile.write(str.encode(contents))
-            else:
-                print("OK")
+        if self.path.startswith("/echo"):
+            for request in requests.split("&"):
+                request = request.split("=")[-1]
+                print(request)
                 hi = """<!DOCTYPE html>
                     <html lang="en">
                     <head>
@@ -50,9 +37,20 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
                 # -- Sending the body of the response message
                 self.wfile.write(str.encode(hi))
+            return
+        else:
+            f = open("form1.html", 'r')
+            contents = f.read()
 
+            self.send_response(200)
 
+            self.send_header('Content-Type', 'text/html')
+            self.send_header('Content-Length', len(str.encode(contents)))
+            self.end_headers()
 
+            # -- Sending the body of the response message
+            self.wfile.write(str.encode(contents))
+            return
 
 
 # -- Main program
