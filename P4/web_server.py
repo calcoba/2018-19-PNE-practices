@@ -18,35 +18,36 @@ def process_client(cs):
     msg = cs.recv(2048).decode("utf-8")
 
     # Print the received message, for debugging
-    print()
-    print("Request https://github.com/calcoba/2018-19-PNE-practices.gitessage: ")
-    print(len(msg))
-    print(msg)
-    url = msg.split("\n")[0]
-    try:
-        request = url.split()[1]
-    except IndexError:
-        cs.close()
-        return
-    print(request)
-    if "blue" in request:
-        f = open("blue.html", 'r')
-        content = f.read()
-        f.close()
 
-    elif "pink" in request:
-        f = open("pink.html", 'r')
-        content = f.read()
-        f.close()
-    elif len(request) > 1:
-        f = open("error.html")
-        content = f.read()
-        f.close()
+    if "GET" in msg:
+        print()
+        print("Request https://github.com/calcoba/2018-19-PNE-practices.gitessage: ")
+        print(msg)
+        url = msg.split("\n")[0]
+        try:
+            request = url.split()[1]
+        except IndexError:
+            cs.close()
+            return
+        print(request)
+        if "blue" in request:
+            f = open("blue.html", 'r')
+            content = f.read()
+            f.close()
 
-    else:
-        f = open("index.html", 'r')
-        content = f.read()
-        f.close()
+        elif "pink" in request:
+            f = open("pink.html", 'r')
+            content = f.read()
+            f.close()
+        elif len(request) > 1:
+            f = open("error.html")
+            content = f.read()
+            f.close()
+
+        else:
+            f = open("index.html", 'r')
+            content = f.read()
+            f.close()
 
     status_line = "HTTP/1.1 200 OK\r\n"
     heather = "Content-Type: text/html\r\n"
