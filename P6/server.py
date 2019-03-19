@@ -48,9 +48,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         termcolor.cprint(self.requestline, 'blue')
 
         request = self.requestline.split()[1]
-        print(request)
         actions = request.split("?")[-1]
-        print(actions)
 
         if self.path.startswith("/seq"):
             analysis = seq_analysis(actions)
