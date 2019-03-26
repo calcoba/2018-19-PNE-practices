@@ -3,60 +3,60 @@
 
 import http.client
 import json
-import sys
+
+
+def connect(method, endpoints, headers):
+    conn = http.client.HTTPSConnection(HOSTNAME)
+
+    # -- Send the request. No body (None)
+    # -- Use the defined headers
+    conn.request(method, endpoints, None, headers)
+
+    # -- Wait for the server's response
+    r1 = conn.getresponse()
+
+    # -- Print the status
+    print()
+    print("Response received: ", end='')
+    print(r1.status, r1.reason)
+
+    if not r1.status == 200:
+        return
+
+    text_json = r1.read().decode("utf-8")
+    conn.close()
+
+    try:
+        city_data = json.loads(text_json)
+        city_woeid = city_data[0]['woeid']
+        return city_woeid
+
+    except IndexError:
+        return "Please choose another city or watch the spell"
+
 
 # -- API information
 HOSTNAME = "www.metaweather.com"
 ENDPOINT = "/api/location/"
-ARGUMENT = "search/?query="+input("Please enter the name of a capital to get the weather info: ")
-
-# -- For the location we have to use the
-# -- Were on earth identifier
-# -- London woeid = 44418
-# -- Madrid woeid = 766273
-METHOD = "GET"
-
-# -- Here we can define special headers if needed
 headers = {'User-Agent': 'http-client'}
-
-# -- Connect to the server
-# -- NOTICE it is an HTTPS connection!
-# -- If we do not specify the port, the standar one
-# -- will be used
-conn = http.client.HTTPSConnection(HOSTNAME)
-
-# -- Send the request. No body (None)
-# -- Use the defined headers
-conn.request(METHOD, ENDPOINT + ARGUMENT, None, headers)
-
-# -- Wait for the server's response
-r1 = conn.getresponse()
-
-# -- Print the status
-print()
-print("Response received: ", end='')
-print(r1.status, r1.reason)
-
-if not r1.status == 200:
-    sys.exit()
+METHOD = "GET"
+activity = True
 
 
-# -- Read the response's body and close
-# -- the connection
-text_json = r1.read().decode("utf-8")
-conn.close()
+while activity:
+    ARGUMENT = "search/?query="+input("Please enter the name of a capital to get the weather info: ")
+    COMPLETE_ENDPOINT = ENDPOINT + ARGUMENT
 
-# -- Optionally you can print the
-# -- received json file for testing
-# print(text_json)
-
-# -- Generate the object from the json file
-city_woeid = json.loads(text_json)
+    city_woeid = connect(METHOD, COMPLETE_ENDPOINT, headers)
+    if type(city_woeid) is int:
+        activity = False
+    else:
+        print(city_woeid)
 
 # -- Get the data
 
 if city_woeid:
-    LOCATION_WOEID = str(city_woeid[0]['woeid'])
+    LOCATION_WOEID = str(city_woeid)
 
     conn = http.client.HTTPSConnection(HOSTNAME)
 
@@ -87,4 +87,3 @@ if city_woeid:
 
 else:
     print("The city you have choose is not available, please try again")
-
