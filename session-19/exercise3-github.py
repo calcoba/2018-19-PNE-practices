@@ -68,7 +68,19 @@ for i in range(len(repos)):
     repos_name.append(repos[i]['name'])
 
 print("Name of user repos: {}".format(", ".join(repos_name)))
+print(repos_name)
+repo = "2018-19-PNE-practices"
 
-if "2018-19-PNE-repo" in repos_name:
-    print("OK")
+if repo in repos_name:
+    ENDPOINT = "/repos/"
+    conn.request(METHOD, ENDPOINT + GITHUB_ID+"/"+repo+"/stats/contributors", None, headers)
+    r3 = conn.getresponse()
+    print()
+    print("Response received: ", end='')
+    print(r3.status, r3.reason)
+    commit_json = r3.read().decode("utf-8")
+    commit_numb = json.loads(commit_json)
+    print("The number of total commits of the {} repo is {}".format(repo, commit_numb[0]['total']))
+    conn.close()
+
 
