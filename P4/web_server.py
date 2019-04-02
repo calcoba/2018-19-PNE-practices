@@ -1,7 +1,7 @@
 import socket
 
 # Change this IP to yours!!!!!
-IP = "212.128.253.111"
+IP = "212.128.253.112"
 PORT = 8080
 
 
@@ -30,22 +30,22 @@ def process_client(cs):
             cs.close()
             return
         print(request)
-        if "blue" in request:
+        if "/blue" == request:
             f = open("blue.html", 'r')
             content = f.read()
             f.close()
 
-        elif "pink" in request:
+        elif "/pink" == request:
             f = open("pink.html", 'r')
             content = f.read()
             f.close()
-        elif len(request) > 1:
-            f = open("error.html")
+        elif "/" == request:
+            f = open("index.html", 'r')
             content = f.read()
             f.close()
 
         else:
-            f = open("index.html", 'r')
+            f = open("error.html")
             content = f.read()
             f.close()
 
